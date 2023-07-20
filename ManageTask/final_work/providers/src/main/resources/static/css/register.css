@@ -1,0 +1,134 @@
+/*<style>*/
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+
+}
+body{
+    background: url(../img/agag.jpg)  no-repeat center;
+}
+
+
+.rg_layout{
+    width: 800px;
+    height: 500px;
+    padding:40px 0 0 0;
+    border: 8px solid #EEEEEE;
+    background-color: white ;
+    margin:150px auto;  /*让div标签水平居中 */
+    opacity: 0.75; /* 设置透明度*/
+
+}
+
+.rg_left{
+
+
+    float: left;
+    margin: 15px;
+}
+
+.rg_center{
+
+
+    float: left;
+}
+.rg_right{
+
+
+    float: right;
+}
+.p_reg{
+
+    color: #ffd026;
+    font-size: 20px;
+
+}
+.p_en{
+    color: gray;
+    font-size: 20px;
+
+}
+.rg_right > p:first-child{
+
+    margin: 10px;
+}
+.rg_right p a{
+    color: pink;
+}
+.td_left{
+    width: 100px;
+    text-align: right;
+    height: 45px;
+
+}
+.td_right{
+    padding-left: 40px;
+
+}
+#username,#password,#email,#name,#phone,#birthday,#checkcode{
+    width: 251px;
+    height: 32px;
+    border: 1px solid gray;
+    border-radius: 5px;   /* 设置边框圆角*/
+    padding-left: 15px;
+}
+#checkcode{
+    width: 110px;
+}
+#img_check{
+
+    height: 32px;
+    vertical-align: middle;  //垂直居中
+}
+#btn_sub{
+    width: 150px;
+    height: 40px;
+    background-color: #FFD026;
+    border: 1px solid  #FFD026;
+    border-radius: 6px;
+    /* font-weight: bold; */
+    margin-top: 20px;
+
+}
+/*</style>*/
+
+
+
+
+
+
+.drag{
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #e8e8e8;
+    position: relative;
+    margin:0 auto;
+}
+.bg{
+    width:40px;
+    height: 100%;
+    position: absolute;
+    background-color: #75CDF9;
+}
+.text{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    user-select: none;
+}
+.btn{
+    width:40px;
+    height: 38px;
+    position: absolute;
+    border:1px solid #ccc;
+    cursor: move;
+    font-family: "宋体";
+    text-align: center;
+    background-color: #fff;
+    user-select: none;
+    color:#666;
+}

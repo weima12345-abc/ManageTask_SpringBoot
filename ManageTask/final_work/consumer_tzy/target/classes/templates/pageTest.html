@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+--------------------------------------------------第一种分页刷新页面分页----------------------------------------------
+<!--<table  border="1" cellspacing="0">-->
+<!--    <tr th:each="user3 : ${users}"  border="1" cellspacing="0">-->
+<!--        <td th:text="${user3.username}"></td>-->
+<!--        <td th:text="${user3.password}"></td>-->
+<!--    </tr>-->
+
+<!--</table>-->
+
+<!--<div align="center">-->
+<!--    <a class="allpage"><b th:text="'共 '+ ${page.pageCount}+ ' 页'"></b></a>-->
+<!--    <a  th:href="@{/testPage(currentPageNumber=${page.firstPage})}"  >首页</a>-->
+<!--    <a  th:href="@{/testPage(currentPageNumber=${page.currentPageNumber} -1 )}"  >上一页</a>-->
+<!--    <a th:href="@{'/testPage?currentPageNumber=' + ${i}}"-->
+<!--       th:each="i :${#numbers.sequence(page.firstPage, page.pageCount)}" th:text="  ${i}"-->
+<!--       th:class="${page.currentPageNumber == i}? 'page-item active' :' page-item' "></a>-->
+
+<!--    <a th:href="@{/testPage(currentPageNumber=${page.currentPageNumber} +1)}" >下一页</a>-->
+<!--    <a th:href="@{/testPage(currentPageNumber=${page.pageCount})}" >尾页</a>-->
+<!--</div>-->
+<!--<table>-->
+<!--    <tr>-->
+<!--        <td> 当前页：<span th:text="${page.currentPageNumber}"></span></td>-->
+<!--        <td> 总页数<span th:text="${page.pageCount}"></span></td>-->
+<!--        <td> 总记录数：<span th:text="${page.rowCount}"></span></td>-->
+
+<!--    </tr>-->
+<!--</table>-->
+<!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;第二种分页不刷新页面分页-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--<table id="testTable2" border="1" cellspacing="0">-->
+<!--    <tr th:each="user3 : ${users}"  border="1" cellspacing="0">-->
+<!--        <td th:text="${user3.username}"></td>-->
+<!--        <td th:text="${user3.password}"></td>-->
+<!--    </tr>-->
+
+<!--</table>-->
+<!--<table align="center">-->
+<!--    <tr>-->
+<!--        <td> 当前页：<span id="currentpage" th:text="${page.currentPageNumber}"></span></td>-->
+<!--        <td> 总页数<span th:text="${page.pageCount}"></span></td>-->
+<!--        <td> 总记录数：<span th:text="${page.rowCount}"></span></td>-->
+
+<!--        <td><input id="firstInput" type="button" value="首页" ></td>-->
+<!--        <td><input id="upInput" type="button" value="上一页" ></td>-->
+<!--        <td><input type="button" value="下一页"  ></td>-->
+<!--        <td><input type="button" value="返回首页"  ></td>-->
+<!--        <td><input type="button" value="最后首页"  ></td>-->
+<!--    </tr>-->
+<!--</table>-->
+<table  border="1" cellspacing="0">
+    <tr th:each="user3 : ${users}"  border="1" cellspacing="0">
+        <td th:text="${user3.name}"></td>
+        <td th:text="${user3.address}"></td>
+    </tr>
+
+</table>
+<!--for(User user3:users){-->
+<!--}-->
+<div align="center">
+    <a class="allpage"><b th:text="'共 '+ ${page.pageCount}+ ' 页'"></b></a>
+    <a  th:href="@{/testPage(currentPageNumber=${page.firstPage})}"  >首页</a>
+    <a  th:href="@{/testPage(currentPageNumber=${page.currentPageNumber} -1 )}"  >上一页</a>
+    <a th:href="@{'/testPage?currentPageNumber=' + ${i}}"
+       th:each="i :${#numbers.sequence(page.firstPage, page.pageCount)}" th:text="  ${i}"
+       th:class="${page.currentPageNumber == i}? 'page-item active' :' page-item' "></a>
+
+    <a th:href="@{/testPage(currentPageNumber=${page.currentPageNumber} +1)}" >下一页</a>
+    <a th:href="@{/testPage(currentPageNumber=${page.pageCount})}" >尾页</a>
+</div>
+<table>
+    <tr>
+        <td> 当前页：<span th:text="${page.currentPageNumber}"></span></td>
+        <td> 总页数<span th:text="${page.pageCount}"></span></td>
+        <td> 总记录数：<span th:text="${page.rowCount}"></span></td>
+
+    </tr>
+</table>
+--------------------------------------------------第二种分页不刷新页面分页-----------------------------------------------------------
+<table id="testTable2" border="1" cellspacing="0">
+    <tr th:each="user3 : ${users}"  border="1" cellspacing="0">
+        <td th:text="${user3.name}"></td>
+        <td th:text="${user3.address}"></td>
+    </tr>
+
+</table>
+<table align="center">
+    <tr>
+        <td> 当前页：<span id="currentpage" th:text="${page.currentPageNumber}"></span></td>
+        <td> 总页数<span th:text="${page.pageCount}"></span></td>
+        <td> 总记录数：<span th:text="${page.rowCount}"></span></td>
+
+        <td><input id="firstInput" type="button" value="首页" ></td>
+        <td><input id="upInput" type="button" value="上一页" ></td>
+        <td><input type="button" value="下一页"  ></td>
+        <td><input type="button" value="返回首页"  ></td>
+        <td><input type="button" value="最后首页"  ></td>
+    </tr>
+</table>
+</body>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var currentPageNumber = [[${page.firstPage}]];
+        $("#firstInput").click(function(){
+            htmlobj=$.ajax({url:"/testPage2?currentPageNumber="+currentPageNumber,async:false});
+
+            var json=JSON.parse(htmlobj.responseText);
+            var tb= null;
+            for (var user in json){
+                //alert(json[user].username)
+                tb= tb + '<tr><td>'+json[user].username+' </td><td> '+json[user].password+'</td></tr>'
+            }
+            $("#testTable2").html(tb);
+            $("#currentpage").text(1);
+        });
+    });
+
+
+</script>
+
+</script>
+</html>

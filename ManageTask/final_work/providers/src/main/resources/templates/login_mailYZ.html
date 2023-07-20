@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<!--<form method="post" action="tologin">-->
+    <table>
+        <tr>
+            <td>用户名：</td>
+            <td><input id="username" name="username" type="text" ></td>
+        </tr>
+        <tr>
+            <td>密码</td>
+            <td><input id="password" name="password" type="password"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input name="code" type="button" value="发生邮件" onclick="changeCode()" /></td>
+
+        </tr>
+        <tr>
+            <td></td>
+            <td> <input type="submit" value="确定"></td>
+        </tr>
+    </table>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script>
+
+        function changeCode() {
+            $.ajax({url:"/yanZhen",async:false});
+        }
+        function genTimestamp() {
+            var time = new Date();
+            return time.getTime();
+        }
+
+    </script>
+<!--</form>-->
+</body>
+</html>

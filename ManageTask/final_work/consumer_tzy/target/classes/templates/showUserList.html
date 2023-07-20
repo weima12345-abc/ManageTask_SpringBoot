@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-touch-fullscreen" content="yes"/>
+  <meta name="format-detection" content="email=no" />
+  <meta name="wap-font-scale"  content="no" />
+  <meta name="viewport" content="user-scalable=no, width=device-width" />
+  <meta content="telephone=no" name="format-detection" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+  <link type="text/css" rel="stylesheet" href="/css/pagination.css"/>
+
+  <meta name="description" content="，AXUI前端框架是面向设计，满足设计多样化需求的前端解决方案，减少或剔除JS文件资源和API。AXUI前端框架原则是能用css写的不用js；能用js写的不用插件；能用插件的不重复引用插件。核心文件只有ax.css和ax.js，加载速度飞快。">
+  <meta name="keywords" content=",前端框架,UI,CSS3,HTML5,原生JS,面向设计,前端工程师">
+
+  <title>用户信息列表</title>
+  <style type="text/css">
+    body{
+      margin: 0;
+      padding: 0;
+    }
+    a{
+      color:black;
+      text-decoration: none;
+    }
+    a:hover{
+      color:red;
+    }
+    .place{
+      /*background: url("../resources/images/place_bg.gif");*/
+      background-size: 100% 100%;
+    }
+    .place ul{
+      margin: 0;
+      padding:0;
+      list-style: none;
+      display: inline-block;
+    }
+    .place span{
+      font-weight: bolder;
+    }
+    .place ul li{
+      height:40px;
+      line-height:40px;
+      display: inline-block;
+      padding-right:12px;
+      /*background: url("../resources/images/place-link.gif") no-repeat right;*/
+      margin-left: 5px;
+    }
+    .place ul li:last-child{
+      background: none;
+    }
+    .search-aside{
+      width:730px;
+      margin:5px auto;
+      height:260px;
+      border: 6px solid #EAEAEA;
+      box-shadow: 5px 5px 5px #888888;
+      font-family: '仿宋';
+    }
+    .search-form{
+      width:450px;
+      margin: 15px auto;
+    }
+    .search-form ul{
+      margin: 0px;
+      padding:0px;
+      list-style: none;
+    }
+    .search-form ul li{
+      margin-bottom: 5px;
+    }
+    #search-button,#reset-button,#export-button{
+      width:50px;
+      height:30px;
+      color:#fff;
+      font-size:20px;
+      background: #007BFF;/*#5A98DE*/
+      padding: 0 5px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bolder;
+    }
+    #search-button:hover{
+      background:#0069D9;
+    }
+    #reset-button:hover{
+      background:#0069D9;
+    }
+    #export-button:hover{
+      background:#0069D9;
+    }
+    .search-result{
+      width:730px;
+      margin:15px auto;
+      height:300px;
+      border: 6px solid #EAEAEA;
+      box-shadow: 5px 5px 5px #888888;
+    }
+    .search-tbody a{
+      color: black;
+    }
+    .search-tbody a:hover{
+      color: red;
+      text-decoration: none;
+    }
+    table{
+      width:100%;
+      border-collapse: collapse;
+    }
+    /*一般不给tr设置背景色,这样在同一行会出现背景色的间断,可以将背景色设置在td上 */
+    table th{
+      text-indent:20px;/* 设置这个是为了能使得th宽度增大,不直接设置宽度是因为每个th文字内容不同,文字内容多的可能会受限,当然设置padding也是等效的*/
+      /*padding-left:20px;margin是无效的*/
+      text-align:center;
+      font-family: "楷体";
+      height:40px;
+      /*background: url("../resources/images/th.gif");*/
+      background-size: 100% 100%;
+    }
+    table tbody tr{
+      font-family: "仿宋";
+    }
+    table tbody tr:nth-child(even) {
+      background: #f5f8fa;
+    }
+    table tbody tr:hover{
+      background: #e5ebee;
+    }
+    table tbody td{
+      /*padding-left:20px;*/
+      height:35px;
+      text-align:center;
+      text-indent:20px;
+    }
+    .wr-page{
+      text-align:center;
+    }
+    .search-tbody span{
+      color: black;
+      cursor: pointer;
+    }
+    .search-tbody span:hover{
+      color: red;
+    }
+  </style>
+</head>
+<body class="ax-align-origin">
+
+
+
+
+
+
+
+<div class="place">
+
+</div>
+
+<div class="search-aside">
+
+  <form  class="search-form">
+    <ul class="search-item">
+      <li>
+        <label>通过作业描述查询:</label>
+        <input type="text" name="describe" id="describe"/>
+      </li>
+
+      <li>
+        <label style="margin-left: 16px;">通过发布者查询:</label>
+        <input type="text" name="email" id="builder"/>
+      </li>
+      <li>
+        <label>开始时间-结束时间:</label>
+<!--        <div class="ax-form-input"><span class="ax-pos-left" style="width:2.4rem;"><i class="ax-iconfont ax-icon-lock-f"></i></span>-->
+          <input name="start_time" id="start_time" placeholder="输入开始时间" type="date" required="required"><span class="ax-pos-right"><a href="###" class="ax-iconfont ax-icon-close ax-val-none"></a></span>
+<!--        </div>-->
+<!--        <div class="ax-form-input"><span class="ax-pos-left" style="width:2.4rem;"><i class="ax-iconfont ax-icon-lock-f"></i></span>-->
+          <input name="end_time" id="end_time" placeholder="输入截至时间" type="date" required="required"><span class="ax-pos-right"><a href="###" class="ax-iconfont ax-icon-close ax-val-none"></a></span>
+<!--        </div>-->
+<!--        <select name="roleName" id="roleName">-->
+<!--          <option selected="selected" style="display: none" value="">点击下拉</option>-->
+<!--          <option value="全部用户">全部用户</option>-->
+<!--          <option value="普通用户">普通用户</option>-->
+<!--          <option value="管理员">管理员</option>-->
+<!--        </select>-->
+      </li>
+
+      <li>
+        <input type="button" id="search-button" value="查询" onclick="secletd()" /> &nbsp;
+<!--        <input type="button" id="reset-button" value="重置" /> &nbsp;-->
+        <!--                <input type="button" style="width: 100px;" id="export-button" value="导出Excel" onclick="exportExcel()">-->
+      </li>
+    </ul>
+  </form>
+</div>
+
+<div class="search-result">
+  <table>
+    <thead class="th">
+    <tr >
+      <th>用户id</th>
+      <th>作业描述</th>
+      <th>作业开始时间</th>
+      <th>作业截至时间</th>
+      <th>发布者</th>
+      <th>已提交</th>
+      <th>操作</th>
+
+    </tr>
+    </thead>
+    <tbody class="search-tbody">
+<!--    <tr>-->
+<!--      <td>usersInfo[i]</td>-->
+<!--      <td>usersInfo[i]</td>-->
+<!--      <td>usersInfo[i]</td>-->
+<!--      <td>usersInfo[i]</td>-->
+<!--      <td><span >删除</span></td>-->
+<!--      </tr>-->
+    </tbody>
+  </table>
+  <div class="wr-page">
+
+  </div>
+</div>
+<script src="/js/jquery.min.js"></script>
+<script type="/js/pagination.js"></script>
+<script>
+  let  role;
+  let name;
+  $.ajax({
+    url: 'http://localhost:8001/getUserSession',
+    type: 'post',
+    datatype: 'json',
+    success: function (res) {
+      name=res;
+      $.ajax({
+        url: 'http://localhost:8001/getUserROleSession',
+        type: 'post',
+        datatype: 'json',
+        success: function (res) {
+
+          role = res;
+          if (role == "Teacher") {
+
+
+            $.ajax({
+              url: 'http://localhost:8001/getUserList',
+              async: false,
+              type: 'post',
+              datatype: 'json',
+              success: function (res) {
+                console.log(res.length);
+                var j = 0;
+                let inserString
+                for (i = 0; i < res.length; i++) {
+                  //
+                  console.log(res[i])
+                  inserString =
+                          `
+ <tr>
+      <td>${res[i][j]}</td>
+      <td>${res[i][j + 1]}</td>
+      <td>${res[i][j + 2]}</td>
+      <td>${res[i][j + 3]}</td>
+      <td>${res[i][j + 4]}</td>
+      <td>${res[i][j + 5]}</td>
+      <td>
+      <span id="${res[i][j]}" onclick="changeStu()" style="margin-left: -22px;">修改</span>
+      <br>
+      <span id="${res[i][j]}" onclick="deleted()">删除</span>
+      <br>
+      <span id="${res[i][j]}" onclick="search()">提交列表</span></td>
+
+      </tr>
+`
+                  let inserStrings = decodeURIComponent(inserString);
+                  // console.log(inserStrings)
+                  $.ajax({
+                    url: 'http://localhost:8001/index',
+                    type: 'get',
+                    datatype: 'json',
+                    success: function (res) {
+
+                      // console.log($(".search-tbody")[0].innerHTML)
+                      $(".search-tbody").html(inserStrings + $(".search-tbody")[0].innerHTML);
+                    }
+                  })
+                }
+
+              }
+
+            })
+          }
+          if (role == "Student") {
+            $.ajax({
+              url: 'http://localhost:8001/getUserList',
+              async: false,
+              type: 'post',
+              datatype: 'json',
+              success: function (res) {
+                var j = 0;
+                let inserString;
+                for (i = 0; i < res.length; i++) {
+                  //
+                  console.log(res[i])
+                  inserString =
+                          `
+ <tr>
+      <td>${res[i][j]}</td>
+      <td>${res[i][j + 1]}</td>
+      <td>${res[i][j + 2]}</td>
+      <td>${res[i][j + 3]}</td>
+      <td>${res[i][j + 4]}</td>
+      <td>${res[i][j + 5]}</td>
+      <td>
+
+     <a > <span id="${res[i][j]}" onclick="search()">提交</span></a></td>
+
+      </tr>
+`
+                  let inserStrings = decodeURIComponent(inserString);
+                  // console.log(inserStrings)
+                  $.ajax({
+                    url: 'http://localhost:8001/index',
+                    type: 'get',
+                    datatype: 'json',
+                    success: function (res) {
+
+                      // console.log($(".search-tbody")[0].innerHTML)
+                      $(".search-tbody").html(inserStrings + $(".search-tbody")[0].innerHTML);
+                    }
+                  })
+                }
+              }
+            })
+          }
+          if (role == "Admin") {
+
+            let inserString1 =
+                    `
+ <tr>
+      <th>序号</th>
+      <th>操作</th>
+      <th>交易耗时</th>
+      <th>Controller URL</th>
+      <th>用户姓名</th>
+      <th>时间</th>
+
+      </tr>
+`
+            let inserStrings1 = decodeURIComponent(inserString1);
+
+            $(".th").html(inserStrings1)
+            $.ajax({
+              url: 'http://localhost:8001/getSysList',
+              async: false,
+              type: 'post',
+              datatype: 'json',
+              success: function (res) {
+                var j = 0;
+                let inserString;
+                for (i = 0; i < res.length; i++) {
+                  //
+                  console.log(res[i])
+                  inserString =
+                          `
+ <tr>
+      <td>${res[i][j]}</td>
+      <td>${res[i][j + 1]}</td>
+      <td>${res[i][j + 2]}</td>
+      <td>${res[i][j + 3]}</td>
+      <td>${res[i][j + 4]}</td>
+      <td>${res[i][j + 5]}</td>
+      <td>
+</td>
+
+      </tr>
+`
+                  let inserStrings = decodeURIComponent(inserString);
+                  // console.log(inserStrings)
+                  $.ajax({
+                    url: 'http://localhost:8001/index',
+                    type: 'get',
+                    datatype: 'json',
+                    success: function (res) {
+
+                      // console.log($(".search-tbody")[0].innerHTML)
+                      $(".search-tbody").html(inserStrings + $(".search-tbody")[0].innerHTML);
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      })
+    }})
+//查询
+  function secletd(){
+    var describe = document.getElementById("describe").value;
+    var builder = document.getElementById("builder").value;
+    var start_time = document.getElementById("start_time").value;
+    var end_time = document.getElementById("end_time").value;
+
+// if (start_time!=undefined&&end_time!=undefined){
+console.log(start_time);
+
+      $.ajax({
+        url: 'http://localhost:8001/selectd',
+        async:false,
+        type: 'post',
+        data:{describe:describe,builder:builder,start_time1:start_time,end_time1:end_time},
+        datatype: 'json',
+        success: function(res) {
+
+          console.log(res);
+          if (res[0]!=null){
+            $(".search-tbody").html(" ")
+            var j=0;
+            let inserString
+            for ( i = 0; i < res.length; i++) {
+              //
+              console.log( res[i])
+              inserString =
+                      `
+ <tr>
+      <td>${res[i][j]}</td>
+      <td>${res[i][j + 1]}</td>
+      <td>${res[i][j + 2]}</td>
+      <td>${res[i][j + 3]}</td>
+      <td>${res[i][j+4]}</td>
+      <td>${res[i][j+5]}</td>
+      <td>
+      <span id="${res[i][j]}" onclick="changeStu()" style="margin-left: -22px;">修改</span>
+       <br>
+      <span id="${res[i][j]}" onclick="deleted()">删除</span>
+      <br>
+      <span id="${res[i][j]}" onclick="search()">提交列表</span>
+
+      </td>
+      </tr>
+`
+              let inserStrings = decodeURIComponent(inserString);
+              // console.log(inserStrings)
+              $.ajax({
+                url: 'http://localhost:8001/index',
+                type: 'get',
+                datatype: 'json',
+                success: function (res) {
+
+                  // console.log($(".search-tbody")[0].innerHTML)
+                  $(".search-tbody").html(inserStrings+ $(".search-tbody")[0] .innerHTML);
+                }
+              })
+            }
+
+          }else {
+            $(".search-tbody").html(" ")
+          }
+
+        }})
+
+
+
+
+
+// }else {
+//   alert("开始时间-结束时间为必填！")
+// }
+
+  }
+
+
+
+  //删除
+
+  function deleted() {
+    var id;
+    var role_yx;
+    var arr = document.getElementsByTagName('span');
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].onclick = function () {
+        id = this.id;
+        // alert(id);
+
+              $.ajax({
+                url: 'http://localhost:8001/deleted',
+                type: 'post',
+                data: {id: id,role:name},
+                datatype: 'json',
+                success: function (res) {
+                  alert(res)
+                  window.location.href = "/showUserListPage_daijiatao"
+
+                }
+              })
+
+            }
+          }
+
+      }
+
+
+  function changeStu() {
+    var id;
+    var role_yx;
+    var arr = document.getElementsByTagName('span');
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].onclick = function () {
+        id = this.id;
+
+
+        $.ajax({
+          url: 'http://localhost:8001/setTaskIdSession',
+          type: 'post',
+          data: {id: id},
+          datatype: 'json',
+          success: function (res) {
+            window.location.href = "/changeTaskPage_daijiatao";
+
+          }
+
+        })
+      }
+    }
+  }
+  //学生提交列表
+  function search(){
+    var id;
+    var role_yx;
+    var arr = document.getElementsByTagName('span');
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].onclick = function () {
+        id = this.id;
+
+
+        $.ajax({
+          url: 'http://localhost:8001/setTaskIdSession',
+          type: 'post',
+          data: {id: id},
+          datatype: 'json',
+          success: function (res) {
+if(role=="Teacher"){
+
+            // alert(id)
+            $.ajax({
+              url: 'http://localhost:8001/getUserTjBiao',
+              type: 'post',
+              data: {id: id,role:role},
+              datatype: 'json',
+              success: function (res) {
+                // alert(res)
+                console.log(res[0]==null)
+                let inserString1 =
+                        `
+   <tr class="th">
+      <th>序号</th>
+      <th>作业描述</th>
+      <th>学生姓名</th>
+      <th>提交时间</th>
+
+
+    </tr>
+`
+                let inserStrings1 = decodeURIComponent(inserString1);
+                $(".th").html(inserStrings1)
+
+
+                if (res[0] != null) {
+                  $(".search-tbody").html(" ")
+
+                  var j = 0;
+                  let inserString
+                  for (var  i = 0; i < res.length; i++) {
+                    //
+                    console.log(res[i])
+                    inserString =
+                            `
+ <tr>
+  <td>${i+1}</td>
+      <td>${res[i][j + 2]}</td>
+      <td>${res[i][j +3]}</td>
+      <td>${res[i][j + 4]}</td>
+
+
+      </td>
+      </tr>
+`
+
+                    let inserStrings = decodeURIComponent(inserString);
+                    console.log(inserStrings1)
+                    // console.log(inserStrings)
+                    $.ajax({
+                      url: 'http://localhost:8001/index',
+                      type: 'get',
+                      datatype: 'json',
+                      success: function (res) {
+
+                        console.log($(".search-tbody")[0].innerHTML)
+                        $(".search-tbody").html(inserStrings + $(".search-tbody")[0].innerHTML);
+                      }
+                    })
+                  }
+
+                } else {
+                  $(".search-tbody").html(" ")
+                }
+                // window.location.href = "/showUserListPage"
+
+              }
+            })
+}else {
+  window.location.href="/man_registerPage_daijiatao"
+}
+          }})
+      }
+
+
+    }
+
+
+  }
+
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
+</body>
+</html>

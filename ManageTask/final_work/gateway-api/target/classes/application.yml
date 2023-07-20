@@ -1,0 +1,30 @@
+server:
+  port: 9010
+
+spring:
+  application:
+    name: api-gateway-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: server
+          uri: http://localhost:7008
+          predicates:
+            - Path=/message
+            - Weight=group1, 75
+        - id: new_server
+          uri: http://localhost:8001
+          predicates:
+            - Path=/message
+            - Weight=group1, 25
+          filters:
+            - PrefixPath=/new
+
+

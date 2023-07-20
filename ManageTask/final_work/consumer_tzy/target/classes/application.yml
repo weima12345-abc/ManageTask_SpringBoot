@@ -1,0 +1,36 @@
+server:
+  port: 7008
+spring:
+  application:
+    name: consumer
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+#eureka:
+#  client:
+#    registerWithEureka: false
+#    fetchRegistry: false
+#    service-url:
+#      defaultZone: http://localhost:7000/eureka/
+
+logging:
+  level:
+    com.example.feignapi.service.UserClient: DEBUG
+
+#feign默认开始 hystrix
+feign:
+  circuitbreaker:
+    enabled: true
+# 加载所有的端点/默认只加载了 info / health
+# 监控端口配置
+management:
+  endpoints:
+    web:
+      exposure:
+        # 开启 info,health；新版本中只默认开启了 health
+        include: info,health
+

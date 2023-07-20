@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>主页</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<!--	<meta http-equiv="Content-Type" content="text/html; charset=GB2312" />-->
+<link rel="stylesheet" type="text/css" href="/css/page.css" />
+
+<link rel="stylesheet" href="/css/bootstrap.css">
+
+<link href="/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<div class="page" id="app">
+	<div class="nav-left">
+		<div class="LogoName" style="cursor:wait">
+			教务管理系统
+		</div>
+		<div class="navDiv">
+			<div class="navName">角色导航</div>
+			<div class="nav-list">
+				<ul>
+
+<!--					<li class="nav-tab a_active waves-effect">-->
+<!--						<a href="html/home.html" class="li-a active" target="iframe"><i class='bx bx-home-smile'></i> 主页-->
+<!--							<span class="badge badge-pill badge-primary float-right">3</span>-->
+<!--						</a>-->
+<!--					</li>-->
+
+					<li class="nav-tab nav-ul">
+						<a href="javascript:void[0]" class="li-a"><i class='bx bx-layer'></i> 设备管理
+							<i class='bx bx-chevron-right' style="float: right;"></i></a>
+						<div class="nav-box">
+							<a href="html/device/device.html" class="li-a-a" target="iframe">当前能耗</a>
+							<a href="html/device/device.html" class="li-a-a" target="iframe">采集记录</a>
+							<a href="html/device/device.html" class="li-a-a" target="iframe">设备详细</a>
+							<a href="html/device/device.html" class="li-a-a" target="iframe">运行状态统计</a>
+
+						</div>
+					</li>
+
+
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="nav-right">
+		<div class="nav-top" >
+			<div id="roleName" style="    position: absolute;cursor: no-drop">
+				当前角色:
+			</div>
+<div style="position: absolute;margin-left: 685px;">
+	<i class="ax-iconfont ax-icon-me-f"></i>
+	<span id="userName" style="cursor: no-drop;color: #dc0c0c"></span>
+</div>
+
+
+
+			<div id="logout" style="    position: relative;
+    margin-top: 0px;
+    margin-left: 855px;">
+				<a onclick="logout()" style="text-decoration-line: none;cursor:wait;">退出</a>
+
+
+			</div>
+
+		</div>
+
+		<div class="content-page">
+			<iframe class="iframe" name="iframe" width="100%" height="100%" frameborder="0"
+					></iframe>
+		</div>
+
+	</div>
+</div>
+
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		let navflag = false;
+		$('.nav-tab').click(function() {
+			$(this).siblings().each(function() {
+				$(this).removeClass('a_active');
+				// $(this).removeClass('a_active');
+				$(this).find('.nav-box').css('height', '0')
+				//关闭右侧箭头
+				if ($(this).attr('class').indexOf('nav-ul') != -1) {
+					$(this).find('.bx-chevron-right').css('transform', 'rotateZ(0deg)')
+					$(this).find('.bx-chevron-right').css('transition', 'all .5s')
+					$(this).removeClass('nav-show')
+					// $(this).find('div').removeClass('nav-box')
+				}
+			})
+			//当前选中
+			$(this).addClass('a_active')
+			$(this).find('.li-a').addClass('active')
+			// 打开右侧箭头
+			$(this).find('.bx-chevron-right').css('transform', 'rotateZ(90deg)')
+			$(this).find('.bx-chevron-right').css('transition', 'all .5s')
+			$(this).addClass('nav-show')
+			// $(this).find('div').addClass('nav-box')
+		})
+		/* 二级菜单a点击事件 */
+		$(".li-a-a").click(function() {
+			$(".li-a-a").each(function() {
+				$(this).removeClass('active-li-a');
+			})
+			$(this).addClass('active-li-a');
+		})
+	})
+	// const vue = new Vue({
+	// 	el:'#app',
+	// 	data:{
+
+	// 	},
+	// 	methods:{
+	// 		liCli(){
+
+	// 		}
+	// 	}
+	// })
+</script>
+<script type="text/javascript" charset="utf-8">
+	// var url = “http://192.168.100.47:8080/cloud-manage/html/cloud-monitor/detail.html?IP=192.168.106.17”;
+	//
+	// 		if(url.indexOf(“?”)!=-1){
+	// 	var str = url.substr(1);
+	// 	strs= str.split(“&”);
+	// 	strs[0].split(“=”)[1];
+	// 	var ip = strs[0].split(“=”)[1];
+	// 	console.log(ip);
+	// }
+
+	// var url=this.location.search;
+
+
+	// console.log(url)
+	// if(url.indexOf("?")!=-1){
+	// 	var str1 = url.substr(1);
+	// 	var str=decodeURI(str1)
+function logout(){
+
+	$.ajax({
+		url: 'http://localhost:8001/logout',
+		type: 'post',
+		datatype: 'json',
+		success: function (res) {
+			if(res==true){
+				alert("登出成功");
+				window.location.href="/tologin";
+			}else {
+				alert("退出失败,请重试!");
+				window.location.href="/index";
+			}
+		}
+	})
+
+}
+var getUserName;
+	var role;
+
+	$.ajax({
+		url: 'http://localhost:8001/getUserSession',
+		type: 'post',
+		datatype: 'json',
+		success: function (res) {
+			console.log(res)
+			getUserName=res;
+			$("#userName").html("当前用户:"+"  "+getUserName)
+			$.ajax({
+				url: 'http://localhost:8001/getUserROleSession',
+				type: 'post',
+				datatype: 'json',
+				success: function (res) {
+					role=res;
+					$("#roleName").html("当前角色:"+"  "+role);
+					if(role=="Teacher"){
+						// alert(role);
+						// alert(getUserName);
+						$.ajax({
+							url: 'http://localhost:8001/getUserROleMenu',
+							type: 'post',
+							data: {role:role },
+							datatype: 'json',
+							success: function (res) {
+								console.log(res)
+								console.log(res.length)
+								let i=0;
+								let j=0;
+								// for (i = 0; i < res.length; i++) {
+								//
+								// 	for (j=0;j<3;j++){
+
+								let inserString =
+										`
+
+       	<li class="nav-tab nav-ul">
+				<a href="javascript:void[0]" class="li-a"><i class='bx bx-cog'></i> ${res[i][j]}
+							<i class='bx bx-chevron-right' style="float: right;"></i></a>
+				<div class="nav-box">
+					<a href="${res[i+1][j+1]}" class="li-a-a" target="iframe">${res[i+1][j]}</a>
+					<a href="${res[i+2][j+1]}" class="li-a-a" target="iframe" style="cursor: pointer" onclick="added()">${res[i+2][j]}</a>
+					<a href="${res[i+3][j+1]}" class="li-a-a" target="iframe">${res[i+3][j]}</a>
+
+				</div>
+			</li>
+`
+								let inserStrings = decodeURIComponent(inserString);
+								$.ajax({
+									url: 'http://localhost:8001/index',
+									type: 'get',
+									datatype: 'json',
+									success: function(res) {
+										// console.log(document.getElementsByClassName("nav-list")[0].children[0].innerHTML)
+										$(".nav-list").children(0).children(0).html(inserStrings);
+									}
+								})
+
+								// 	}
+								// }
+							}
+						})
+
+
+
+					}if(role=="Student") {
+						// alert(role);
+						// alert(getUserName);
+						$("#role").html("当前角色:"+"  "+role);
+						$("#userName").html("当前用户:"+"  "+getUserName)
+						$.ajax({
+							url: 'http://localhost:8001/getUserROleMenu',
+							type: 'post',
+							data: {role:role },
+							datatype: 'json',
+							success: function (res) {
+								console.log(res)
+								console.log(res.length)
+								let i=0;
+								let j=0;
+								// for (i = 0; i < res.length; i++) {
+								//
+								// 	for (j=0;j<3;j++){
+
+								let inserString =
+										`
+
+       	<li class="nav-tab nav-ul">
+				<a href="javascript:void[0]" class="li-a"><i class='bx bx-cog'></i> ${res[i][j]}
+							<i class='bx bx-chevron-right' style="float: right;"></i></a>
+				<div class="nav-box">
+				<a href="${res[i+3][j+1]}" class="li-a-a" target="iframe">${res[i+3][j]}</a>
+<!--					<a href="${res[i+1][j+1]}" class="li-a-a" target="iframe">${res[i+1][j]}</a>-->
+					<a href="${res[i+2][j+1]}" class="li-a-a" target="iframe">${res[i+2][j]}</a>
+
+
+				</div>
+			</li>
+`
+								let inserStrings = decodeURIComponent(inserString);
+								$.ajax({
+									url: 'http://localhost:8001/index',
+									type: 'get',
+									datatype: 'json',
+									success: function(res) {
+										// console.log(document.getElementsByClassName("nav-list")[0].children[0].innerHTML)
+										$(".nav-list").children(0).children(0).html(inserStrings);
+									}
+								})
+
+								// 	}
+								// }
+							}
+						})
+
+
+					}if(role=="Admin") {
+						$("#role").html("当前角色:"+"  "+role);
+						$("#userName").html("当前用户:"+"  "+getUserName)
+						$.ajax({
+							url: 'http://localhost:8001/getUserROleMenu',
+							type: 'post',
+							data: {role:role },
+							datatype: 'json',
+							success: function (res) {
+								console.log(res)
+								console.log(res.length)
+								let i=0;
+								let j=0;
+								// for (i = 0; i < res.length; i++) {
+								//
+								// 	for (j=0;j<3;j++){
+
+								let inserString =
+										`
+
+       	<li class="nav-tab nav-ul">
+				<a href="javascript:void[0]" class="li-a"><i class='bx bx-cog'></i> ${res[i][j]}
+							<i class='bx bx-chevron-right' style="float: right;"></i></a>
+				<div class="nav-box">
+
+				<a href="${res[i+1][j+1]}" class="li-a-a" target="iframe">${res[i+1][j]}</a>
+<a href="${res[i+2][j+1]}" class="li-a-a" target="iframe">${res[i+2][j]}</a>
+				</div>
+			</li>
+`
+
+								let inserStrings = decodeURIComponent(inserString);
+								$.ajax({
+									url: 'http://localhost:8001/index',
+									type: 'get',
+									datatype: 'json',
+									success: function(res) {
+										// console.log(document.getElementsByClassName("nav-list")[0].children[0].innerHTML)
+										$(".nav-list").children(0).children(0).html(inserStrings);
+									}
+								})
+
+								// 	}
+								// }
+							}
+						})
+
+					}
+				}
+			})
+
+		}
+	})
+
+
+
+
+
+
+
+// 	var getUserName1;
+// 	var role1;
+// 	$.ajax({
+// 		url: 'http://localhost:8081/getUser_yxSession',
+// 		type: 'post',
+// 		datatype: 'json',
+// 		success: function (res) {
+// 			console.log(res)
+// 			getUserName1=res;
+// 			$("#userName").html("当前用户:"+"  "+getUserName1)
+// 			$.ajax({
+// 				url: 'http://localhost:8081/getUserYxROleSession',
+// 				type: 'post',
+// 				datatype: 'json',
+// 				success: function (res) {
+// 					role1=res;
+// 					$("#role").html("当前角色:"+"  "+role1);
+// 					if(role1=="管理员"){
+//
+// 						$.ajax({
+// 							url: 'http://localhost:8081/getUserROleMenu',
+// 							type: 'post',
+// 							data: {role:role1 },
+// 							datatype: 'json',
+// 							success: function (res) {
+// 								console.log(res)
+// 								console.log(res.length)
+// 								let i=0;
+// 								let j=0;
+// 								// for (i = 0; i < res.length; i++) {
+// 								//
+// 								// 	for (j=0;j<3;j++){
+//
+// 								let inserString =
+// 										`
+//
+//        	<li class="nav-tab nav-ul">
+// 				<a href="javascript:void[0]" class="li-a"><i class='bx bx-cog'></i> ${res[i][j]}
+// 							<i class='bx bx-chevron-right' style="float: right;"></i></a>
+// 				<div class="nav-box">
+// 					<a href="${res[i+1][j+1]}" class="li-a-a" target="iframe">${res[i+1][j]}</a>
+// 					<a href="${res[i+2][j+1]}" class="li-a-a" target="iframe" style="cursor: pointer" onclick="added()">${res[i+2][j]}</a>
+// 					<a href="${res[i+3][j+1]}" class="li-a-a" target="iframe">${res[i+3][j]}</a>
+//
+// 				</div>
+// 			</li>
+// `
+// 								let inserStrings = decodeURIComponent(inserString);
+// 								$.ajax({
+// 									url: 'http://localhost:8081/index',
+// 									type: 'get',
+// 									datatype: 'json',
+// 									success: function(res) {
+// 										// console.log(document.getElementsByClassName("nav-list")[0].children[0].innerHTML)
+// 										$(".nav-list").children(0).children(0).html(inserStrings);
+// 									}
+// 								})
+//
+// 								// 	}
+// 								// }
+// 							}
+// 						})
+//
+//
+//
+// 					}else {
+// 						$.ajax({
+// 							url: 'http://localhost:8081/getUserROleMenu',
+// 							type: 'post',
+// 							data: {role:role1 },
+// 							datatype: 'json',
+// 							success: function (res) {
+// 								console.log(res)
+// 								console.log(res.length)
+// 								let i=0;
+// 								let j=0;
+// 								// for (i = 0; i < res.length; i++) {
+// 								//
+// 								// 	for (j=0;j<3;j++){
+//
+// 								let inserString =
+// 										`
+//
+//        	<li class="nav-tab nav-ul">
+// 				<a href="javascript:void[0]" class="li-a"><i class='bx bx-cog'></i> ${res[i][j]}
+// 							<i class='bx bx-chevron-right' style="float: right;"></i></a>
+// 				<div class="nav-box">
+// 					<a href="${res[i+1][j+1]}" class="li-a-a" target="iframe">${res[i+1][j]}</a>
+// 					<a href="${res[i+2][j+1]}" class="li-a-a" target="iframe">${res[i+2][j]}</a>
+//
+//
+// 				</div>
+// 			</li>
+// `
+// 								let inserStrings = decodeURIComponent(inserString);
+// 								$.ajax({
+// 									url: 'http://localhost:8081/index',
+// 									type: 'get',
+// 									datatype: 'json',
+// 									success: function(res) {
+// 										// console.log(document.getElementsByClassName("nav-list")[0].children[0].innerHTML)
+// 										$(".nav-list").children(0).children(0).html(inserStrings);
+// 									}
+// 								})
+//
+// 								// 	}
+// 								// }
+// 							}
+// 						})
+//
+//
+// 					}
+// 				}
+// 			})
+// 		}
+// 	})
+
+			// }
+	// function  added(){
+	//
+	// 	let inserStrings = decodeURIComponent(inserString);
+	// 	$.ajax({
+	// 		url: 'http://localhost:8081/index',
+	// 		type: 'get',
+	// 		datatype: 'json',
+	// 		success: function(res) {
+	//
+	// 			alert("成功")
+	// 			$(".iframe").html(" ")
+	// 			console.log($(".iframe").innerHTML)
+	// 			$(".iframe").html(inserStrings+$(".iframe")[0].innerHTML);
+	// 		}
+	// 	})
+	//
+	// 	// 	}
+	// 	// }
+	// }
+
+
+
+</script>
+
+</body>
+</html>

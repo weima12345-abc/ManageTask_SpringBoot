@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/page.css" />
+
+
+	<link href="/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+	<!-- for-mobile-apps -->
+<!--	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+
+<!--	<meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+<!--&lt;!&ndash;<meta name="keywords" content="" />&ndash;&gt;-->
+<!--&lt;!&ndash;<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);&ndash;&gt;-->
+<!--&lt;!&ndash;		function hideURLbar(){ window.scrollTo(0,1); } </script>&ndash;&gt;-->
+<!--&lt;!&ndash; //for-mobile-apps &ndash;&gt;-->
+<!--	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />-->
+<!--	<meta name="apple-mobile-web-app-capable" content="yes" />-->
+<!--	<meta name="apple-mobile-web-app-status-bar-style" content="black" />-->
+<!--	<meta name="apple-touch-fullscreen" content="yes"/>-->
+<!--	<meta name="format-detection" content="email=no" />-->
+<!--	<meta name="wap-font-scale"  content="no" />-->
+<!--	<meta name="viewport" content="user-scalable=no, width=device-width" />-->
+<!--	<meta content="telephone=no" name="format-detection" />-->
+<!--	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+
+	<link href="/css/style.css" rel="stylesheet" type="text/css" />
+<!--<link href='https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300italic,300,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>-->
+<!--<link href='https://fonts.googleapis.com/css?family=Fugaz+One' rel='stylesheet' type='text/css'>-->
+</head>
+<body>
+	<div class="main">
+<!--		<h1>Mini Profile Widget</h1>-->
+		<div class="content" style="margin-left: 297px;
+    margin-top: -70px;">
+			<div class="profile">
+				<img src="/img/pic1.png" alt=" " />
+				<h2 id="user">Kimberly Thompson</h2>
+<!--				<p id="role">Web Designer</p>-->
+			</div>
+			<div class="main-grid3">
+				
+					<div class="bar">
+						<p>UX/UX</p>
+					</div>
+<!--				<div class="skills">-->
+<!--					 <div class="skill1" style="width:100%"> </div>-->
+<!--				</div>-->
+<!--				-->
+<!--					<div class="bar">-->
+<!--						<p>HTML / CSS3 / SASS</p>-->
+<!--					</div>-->
+<!--				<div class="skills">-->
+<!--					 <div class="skill2" style="width:90%"> </div>-->
+<!--				</div>-->
+
+<!--					<div class="bar">-->
+<!--						<p>JAVASCRIPT</p>-->
+<!--					</div>-->
+<!--				<div class="skills">-->
+<!--					<div class="skill2" style="width:90%"> </div>-->
+<!--				</div>-->
+
+			</div>
+			<div class="favourites">
+				<ul>
+					<li><a class="eye" href="#">22312</a></li>
+					<li><a class="video" href="#">331</a></li>
+					<li><a  class="favou"href="#">1352</a></li>
+					<div class="clear"></div>
+				</ul>
+				<p>Nemo enim ipsam volup sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+			</div>
+			<div class="facebook">
+					<ul>
+						<li><a class="icon1" href="#"></a></li>
+						<li><a class="icon2" href="#"></a></li>
+						<li><a class="icon3" href="#"></a></li>
+						<li><a class="icon4" href="#"></a></li>
+						<li><a class="icon5" href="#"></a></li>	
+					</ul>
+			</div>
+			<div class="follow">
+				<a href="#">follow</a>
+			</div>
+		</div>
+<!--		<p class="footer">Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>-->
+
+	</div>
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript"  charset="utf-8">
+
+		var role;
+		var getUserName;
+		$.ajax({
+			url: 'http://localhost:8001/getUserSession',
+			type: 'post',
+			datatype: 'json',
+			success: function (res) {
+				console.log(res)
+				getUserName=res;
+
+				$.ajax({
+					url: 'http://localhost:8001/getUser',
+					type: 'post',
+					data:{name:getUserName},
+					datatype: 'json',
+					success: function (res) {
+						console.log(res[0]+res[1]+res[3])
+
+						// $("#role").html("当前角色:"+"  "+res[4]);
+						$("#user").html("当前用户:"+"  "+res[1])
+
+						let String =
+								`
+					<div class="bar">
+					<p>用户id</p>
+						<p>${res[0]}</p>
+					</div>
+				<div class="skills">
+					 <div class="skill1" style="width:100%"> </div>
+				</div>
+
+					<div class="bar">
+					<p>用户名</p>
+						<p>${res[1]}</p>
+					</div>
+				<div class="skills">
+					 <div class="skill2" style="width:100%"> </div>
+				</div>
+
+					<div class="bar">
+					<p>用户邮箱</p>
+						<p>${res[3]}</p>
+					</div>
+				<div class="skills">
+					<div class="skill2" style="width:100%"> </div>
+				</div>
+`
+let String1=String.replace(/%/g, '%25');
+						let Strings =decodeURIComponent(String1);
+
+						$.ajax({
+							url: 'http://localhost:8001/index',
+							type: 'get',
+							datatype: 'json',
+							success: function(res) {
+								$(".main-grid3").children(0).html(" ")
+								// console.log(document.getElementsByClassName("nav-list")[0].children[0].innerHTML)
+								$(".main-grid3").children(0).html(Strings);
+							}
+						})
+
+						// 	}
+						// }
+					}
+				})
+				// $("#user").html("当前用户:"+"  "+getUserName)
+			}
+		});
+
+
+
+
+
+		var role1;
+		var getUserName1;
+		$.ajax({
+			url: 'http://localhost:8001/getUser_yxSession',
+			type: 'post',
+			datatype: 'json',
+			success: function (res) {
+				console.log(res)
+				getUserName1=res;
+
+				$.ajax({
+					url: 'http://localhost:8001/getUserYx',
+					type: 'post',
+					data:{name:getUserName1},
+					datatype: 'json',
+					success: function (res) {
+						console.log(res[0]+res[1]+res[3])
+
+						// $("#role").html("当前角色:"+"  "+res[4]);
+						$("#user").html("当前用户:"+"  "+res[1])
+
+						let String =
+								`
+					<div class="bar">
+					<p>用户id</p>
+						<p>${res[0]}</p>
+					</div>
+				<div class="skills">
+					 <div class="skill1" style="width:100%"> </div>
+				</div>
+
+					<div class="bar">
+					<p>用户名</p>
+						<p>${res[1]}</p>
+					</div>
+				<div class="skills">
+					 <div class="skill2" style="width:100%"> </div>
+				</div>
+
+					<div class="bar">
+					<p>用户邮箱</p>
+						<p>${res[3]}</p>
+					</div>
+				<div class="skills">
+					<div class="skill2" style="width:100%"> </div>
+				</div>
+`
+						let String1=String.replace(/%/g, '%25');
+						let Strings =decodeURIComponent(String1);
+
+						$.ajax({
+							url: 'http://localhost:8001/index',
+							type: 'get',
+							datatype: 'json',
+							success: function(res) {
+								$(".main-grid3").children(0).html(" ")
+								// console.log(document.getElementsByClassName("nav-list")[0].children[0].innerHTML)
+								$(".main-grid3").children(0).html(Strings);
+							}
+						})
+
+						// 	}
+						// }
+					}
+				})
+				// $("#user").html("当前用户:"+"  "+getUserName)
+			}
+		});
+
+	</script>
+
+
+</body>
+</html>

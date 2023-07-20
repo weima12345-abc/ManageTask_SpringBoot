@@ -1,0 +1,94 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash;字符串&ndash;&gt;-->
+<!--<p th:text="${hello}">我是第一个hello</p>-->
+
+<!--<br>-->
+
+<!--&lt;!&ndash;pojo&ndash;&gt;-->
+<!--<form>-->
+<!--    姓名：<p th:text="${user.name}"></p>-->
+<!--    ID：<p th:text="${user.id}"></p>-->
+<!--    地址：<p th:text="${user.address}"></p>-->
+<!--</form>-->
+
+<!--<br>-->
+
+<!--<table>-->
+<!--    <tr>-->
+<!--        <td>ID</td>-->
+<!--        <td>姓名</td>-->
+<!--        <td>地址</td>-->
+<!--        <td>下标</td>-->
+<!--    </tr>-->
+<!--    &lt;!&ndash;pojo数组&ndash;&gt;-->
+<!--    <tr th:each="userr,mystat:${users}">-->
+<!--        <td th:text="${userr.id}">0</td>-->
+<!--        <td th:text="${userr.name}">王春婷</td>-->
+<!--        <td th:text="${userr.address}">上海</td>-->
+<!--        <td th:text="${mystat.index+1}">index+1</td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<!--<br>-->
+
+<!--&lt;!&ndash;url&ndash;&gt;-->
+<!--<a th:href="@{${url}(key1=${key1},key2=${key1})}">去demo页</a>-->
+
+<!--<br>-->
+
+<!--&lt;!&ndash;第一种遍历map&ndash;&gt;-->
+<!--<div th:each="entry:${dataMap}">-->
+<!--    key:<span th:text="${entry.key}"></span>,-->
+<!--    value:<span th:text="${entry.value}"></span>-->
+<!--</div>-->
+
+<!--<br>-->
+
+<!--&lt;!&ndash;第二种遍历map&ndash;&gt;-->
+<!--<div>-->
+<!--    <div th:each="map,mapStat:${dataMap}">-->
+<!--        key:<span th:text="${mapStat.current.key}"></span>-->
+<!--        value:<span th:text="${mapStat.current.value}"></span>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;字符串数组&ndash;&gt;-->
+<!--<br>-->
+<!--<div>-->
+<!--    <div th:each="name,nameStat:${names}">-->
+<!--        <span th:text="${nameStat.count}"></span>-->
+<!--        <span th:text="${name}"></span>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<br>-->
+
+<!--&lt;!&ndash;日期&ndash;&gt;-->
+<!--日期：<span th:text="${#dates.format(date,'yyyy年MM月dd HH:mm:ss')}"/>-->
+
+<!--<br><br>-->
+
+<!--&lt;!&ndash;判断&ndash;&gt;-->
+<!--<div th:if="${age}>18">当年龄超过18岁展示</div>-->
+
+<!--<br>-->
+
+<!--<button onclick="login()">点我</button>-->
+
+<!--</body>-->
+
+<!--<script th:inline="javascript">-->
+<!--    var age = [[${age}]];-->
+<!--    var login = function () {-->
+<!--        alert(age);-->
+<!--    }-->
+<!--</script>-->
+
+<!--</html>-->
